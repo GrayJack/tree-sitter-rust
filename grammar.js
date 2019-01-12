@@ -65,6 +65,8 @@ module.exports = grammar({
     [$.scoped_identifier, $.scoped_type_identifier],
     [$.parameters, $._pattern],
     [$.parameters, $.tuple_struct_pattern],
+    [$.generic_function, $._expression],
+    [$.generic_function, $.generic_type],
 
     // We try to parse macro arguments as expressions and items, resulting in many rules
     // conflicting with `token_tree`.
@@ -88,7 +90,7 @@ module.exports = grammar({
       [$.for_expression],
       [$.function_item, $.function_signature_item],
       [$.function_modifiers],
-      [$.generic_function, $.generic_type_with_turbofish, $.scoped_identifier, $.scoped_type_identifier_in_expression_position],
+      [$.generic_function, $.generic_type, $.scoped_identifier, $.scoped_type_identifier_in_expression_position],
       [$.generic_function],
       [$.if_expression],
       [$.if_let_expression],
@@ -120,6 +122,10 @@ module.exports = grammar({
       [$.visibility_modifier],
       [$.while_expression],
       [$.while_let_expression],
+      [$.generic_function, $._expression],
+      [$.scoped_identifier, $.scoped_type_identifier],
+      [$.generic_function, $.generic_type, $.scoped_identifier, $.scoped_type_identifier],
+      [$.generic_function, $.generic_type, $._expression],
     ].map(a => a.concat($.token_tree))
   ],
 
@@ -681,7 +687,7 @@ module.exports = grammar({
 
     // Section - Types
 
-    _type: $ => choice(
+    _type: $ => prec.right(choice(
       $.abstract_type,
       $.reference_type,
       $.metavariable,
@@ -698,7 +704,7 @@ module.exports = grammar({
       $.dynamic_type,
       $.bounded_type,
       alias(choice(...primitive_types), $.primitive_type)
-    ),
+    )),
 
     bracketed_type: $ => seq(
       '<',
@@ -749,32 +755,24 @@ module.exports = grammar({
 
     unit_type: $ => seq('(', ')'),
 
-    generic_function: $ => prec(1, seq(
+    generic_function: $ => prec.dynamic(1, seq(
       choice(
         $.identifier,
         $.scoped_identifier,
         $.field_expression
       ),
-      '::',
+      optional('::'),
       $.type_arguments
     )),
 
-    generic_type: $ => prec(1, seq(
+    generic_type: $ => prec.dynamic(1, seq(
       choice(
         $._type_identifier,
         $.scoped_type_identifier
       ),
+      optional('::'),
       $.type_arguments
     )),
-
-    generic_type_with_turbofish: $ => seq(
-      choice(
-        $._type_identifier,
-        $.scoped_identifier
-      ),
-      '::',
-      $.type_arguments
-    ),
 
     bounded_type: $ => prec.left(-1, choice(
       seq($.lifetime, '+', $._type),
@@ -814,23 +812,23 @@ module.exports = grammar({
 
     empty_type: $ => '!',
 
-    abstract_type: $ => seq(
+    abstract_type: $ => prec(-1, seq(
       'impl',
       choice(
         $._type_identifier,
         $.scoped_type_identifier,
         $.generic_type
       )
-    ),
+    )),
 
-    dynamic_type: $ => seq(
+    dynamic_type: $ => prec(-1, seq(
       'dyn',
       choice(
         $._type_identifier,
         $.scoped_type_identifier,
         $.generic_type
       )
-    ),
+    )),
 
     mutable_specifier: $ => 'mut',
 
@@ -888,25 +886,16 @@ module.exports = grammar({
       optional(choice(
         $._path,
         $.bracketed_type,
-        alias($.generic_type_with_turbofish, $.generic_type)
+        $.generic_type
       )),
       '::',
       $.identifier
     ),
 
-    scoped_type_identifier_in_expression_position: $ => prec(-2, seq(
-      optional(choice(
-        $._path,
-        alias($.generic_type_with_turbofish, $.generic_type)
-      )),
-      '::',
-      $._type_identifier
-    )),
-
     scoped_type_identifier: $ => seq(
       optional(choice(
         $._path,
-        alias($.generic_type_with_turbofish, $.generic_type),
+        $.generic_type,
         $.bracketed_type,
         $.generic_type
       )),
@@ -1008,8 +997,8 @@ module.exports = grammar({
     struct_expression: $ => seq(
       choice(
         $._type_identifier,
-        alias($.scoped_type_identifier_in_expression_position, $.scoped_type_identifier),
-        $.generic_type_with_turbofish
+        $.scoped_type_identifier,
+        $.generic_type
       ),
       $.field_initializer_list
     ),

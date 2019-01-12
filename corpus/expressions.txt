@@ -527,10 +527,14 @@ Generic functions
 ============================================
 
 std::sizeof::<u32>();
+std::sizeof<u32>();
 
 ---
 
 (source_file
+  (call_expression
+    (generic_function (scoped_identifier (identifier) (identifier)) (type_arguments (primitive_type)))
+    (arguments))
   (call_expression
     (generic_function (scoped_identifier (identifier) (identifier)) (type_arguments (primitive_type)))
     (arguments)))
