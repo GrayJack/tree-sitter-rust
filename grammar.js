@@ -1,4 +1,5 @@
 const PREC = {
+  await: 15,
   call: 14,
   field: 13,
   unary: 11,
@@ -259,8 +260,8 @@ module.exports = grammar({
       '-', '-=', '->', ',', ';', ':', '::', '!', '!=', '@', '*=',
       '/', '/=', '&&', '&=', '#', '%', '%=', '^', '^=', '+', '+=', '<',
       '<<', '<<=', '<=', '=', '==', '=>', '>', '>=', '>>', '>>=', '|', '|=',
-      '||', '~', "?", "'", '..', '...',
-      'as', 'break', 'const', 'continue', 'default', 'enum', 'fn', 'for', 'if', 'impl',
+      '||', '~', "?", "'", '..', '..=', '...',
+      'await', 'async', 'as', 'break', 'const', 'continue', 'default', 'enum', 'fn', 'for', 'if', 'impl',
       'let', 'loop', 'match', 'mod', 'pub', 'return', 'static', 'struct', 'trait', 'type',
       'union', 'unsafe', 'use', 'where', 'while'
     ),
@@ -1159,6 +1160,12 @@ module.exports = grammar({
 
     index_expression: $ => prec(PREC.call, seq($._expression, '[', $._expression, ']')),
 
+    await_expression: $ => prec(PREC.await, seq(
+      $._expression,
+      '.',
+      'await'
+    )),
+
     field_expression: $ => prec(PREC.field, seq(
       $._expression,
       '.',
@@ -1352,8 +1359,20 @@ module.exports = grammar({
     identifier: $ => /[a-zA-Zα-ωΑ-Ωµ_][a-zA-Zα-ωΑ-Ωµ\d_]*/,
 
     _reserved_identifier: $ => alias(choice(
-      'default',
-      'union'
+      "abstract",
+      "async",
+      "become",
+      "box",
+      "do",
+      "final",
+      "macro",
+      "override",
+      "priv",
+      "try",
+      "typeof",
+      "unsized",
+      "virtual",
+      "yield",
     ), $.identifier),
 
     _type_identifier: $ => alias($.identifier, $.type_identifier),

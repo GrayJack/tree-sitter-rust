@@ -1047,6 +1047,14 @@
         },
         {
           "type": "STRING",
+          "value": "await"
+        },
+        {
+          "type": "STRING",
+          "value": "async"
+        },
+        {
+          "type": "STRING",
           "value": "as"
         },
         {
@@ -6251,6 +6259,27 @@
         ]
       }
     },
+    "await_expression": {
+      "type": "PREC",
+      "value": 15,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_expression"
+          },
+          {
+            "type": "STRING",
+            "value": "."
+          },
+          {
+            "type": "STRING",
+            "value": "await"
+          }
+        ]
+      }
+    },
     "field_expression": {
       "type": "PREC",
       "value": 13,
@@ -7251,11 +7280,59 @@
         "members": [
           {
             "type": "STRING",
-            "value": "default"
+            "value": "abstract"
           },
           {
             "type": "STRING",
-            "value": "union"
+            "value": "async"
+          },
+          {
+            "type": "STRING",
+            "value": "become"
+          },
+          {
+            "type": "STRING",
+            "value": "box"
+          },
+          {
+            "type": "STRING",
+            "value": "do"
+          },
+          {
+            "type": "STRING",
+            "value": "final"
+          },
+          {
+            "type": "STRING",
+            "value": "macro"
+          },
+          {
+            "type": "STRING",
+            "value": "override"
+          },
+          {
+            "type": "STRING",
+            "value": "priv"
+          },
+          {
+            "type": "STRING",
+            "value": "try"
+          },
+          {
+            "type": "STRING",
+            "value": "typeof"
+          },
+          {
+            "type": "STRING",
+            "value": "unsized"
+          },
+          {
+            "type": "STRING",
+            "value": "virtual"
+          },
+          {
+            "type": "STRING",
+            "value": "yield"
           }
         ]
       },
