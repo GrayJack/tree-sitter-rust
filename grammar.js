@@ -473,6 +473,7 @@ module.exports = grammar({
     function_modifiers: $ => repeat1(choice(
       'default',
       'const',
+      'async',
       'unsafe',
       $.extern_modifier
     )),

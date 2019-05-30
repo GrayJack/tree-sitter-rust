@@ -2407,6 +2407,10 @@
           },
           {
             "type": "STRING",
+            "value": "async"
+          },
+          {
+            "type": "STRING",
             "value": "unsafe"
           },
           {
