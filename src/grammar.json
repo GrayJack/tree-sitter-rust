@@ -4406,6 +4406,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "await_expression"
+        },
+        {
+          "type": "SYMBOL",
           "name": "field_expression"
         },
         {
@@ -7412,6 +7416,10 @@
     [
       "parameters",
       "tuple_struct_pattern"
+    ],
+    [
+      "await_expression",
+      "field_expression"
     ],
     [
       "token_tree"

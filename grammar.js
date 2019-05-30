@@ -66,6 +66,7 @@ module.exports = grammar({
     [$.scoped_identifier, $.scoped_type_identifier],
     [$.parameters, $._pattern],
     [$.parameters, $.tuple_struct_pattern],
+    [$.await_expression, $.field_expression],
 
     // We try to parse macro arguments as expressions and items, resulting in many rules
     // conflicting with `token_tree`.
@@ -857,6 +858,7 @@ module.exports = grammar({
       $.self,
       $.scoped_identifier,
       $.generic_function,
+      $.await_expression,
       $.field_expression,
       $.array_expression,
       $.tuple_expression,
