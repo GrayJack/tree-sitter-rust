@@ -30,6 +30,11 @@
     "fields": {}
   },
   {
+    "type": "async_block",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "attribute_item",
     "named": true,
     "fields": {}
