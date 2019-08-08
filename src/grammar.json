@@ -3932,6 +3932,10 @@
             {
               "type": "SYMBOL",
               "name": "generic_type"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "function_type"
             }
           ]
         }
