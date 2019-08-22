@@ -118,7 +118,10 @@ module.exports = grammar({
       )
 
       return seq(
-        'macro_rules!',
+        choice(
+          'macro_rules!',
+          'macro'
+        ),
         $.identifier,
         choice(
           seq('(', rules, ')', ';'),
