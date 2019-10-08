@@ -8,7 +8,7 @@
 #define LANGUAGE_VERSION 10
 #define STATE_COUNT 2198
 #define SYMBOL_COUNT 306
-#define ALIAS_COUNT 3
+#define ALIAS_COUNT 4
 #define TOKEN_COUNT 134
 #define EXTERNAL_TOKEN_COUNT 4
 #define FIELD_COUNT 0
@@ -249,7 +249,7 @@ enum {
   sym_unit_expression = 232,
   sym_struct_expression = 233,
   sym_field_initializer_list = 234,
-  sym_shorthand_field_identifier = 235,
+  sym_shorthand_field_initializer = 235,
   sym_field_initializer = 236,
   sym_base_field_initializer = 237,
   sym_if_expression = 238,
@@ -322,7 +322,8 @@ enum {
   aux_sym_string_literal_repeat1 = 305,
   alias_sym_field_identifier = 306,
   alias_sym_primitive_type = 307,
-  alias_sym_type_identifier = 308,
+  alias_sym_shorthand_field_identifier = 308,
+  alias_sym_type_identifier = 309,
 };
 
 static const char *ts_symbol_names[] = {
@@ -561,7 +562,7 @@ static const char *ts_symbol_names[] = {
   [sym_unit_expression] = "unit_expression",
   [sym_struct_expression] = "struct_expression",
   [sym_field_initializer_list] = "field_initializer_list",
-  [sym_shorthand_field_identifier] = "shorthand_field_identifier",
+  [sym_shorthand_field_initializer] = "shorthand_field_initializer",
   [sym_field_initializer] = "field_initializer",
   [sym_base_field_initializer] = "base_field_initializer",
   [sym_if_expression] = "if_expression",
@@ -634,6 +635,7 @@ static const char *ts_symbol_names[] = {
   [aux_sym_string_literal_repeat1] = "string_literal_repeat1",
   [alias_sym_field_identifier] = "field_identifier",
   [alias_sym_primitive_type] = "primitive_type",
+  [alias_sym_shorthand_field_identifier] = "shorthand_field_identifier",
   [alias_sym_type_identifier] = "type_identifier",
 };
 
@@ -1578,7 +1580,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
-  [sym_shorthand_field_identifier] = {
+  [sym_shorthand_field_initializer] = {
     .visible = true,
     .named = true,
   },
@@ -1870,6 +1872,10 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
+  [alias_sym_shorthand_field_identifier] = {
+    .visible = true,
+    .named = true,
+  },
   [alias_sym_type_identifier] = {
     .visible = true,
     .named = true,
@@ -1912,7 +1918,7 @@ static TSSymbol ts_alias_sequences[20][MAX_ALIAS_SEQUENCE_LENGTH] = {
     [2] = sym_identifier,
   },
   [11] = {
-    [0] = sym_shorthand_field_identifier,
+    [0] = alias_sym_shorthand_field_identifier,
   },
   [12] = {
     [2] = sym_identifier,
@@ -1921,7 +1927,7 @@ static TSSymbol ts_alias_sequences[20][MAX_ALIAS_SEQUENCE_LENGTH] = {
     [1] = sym_identifier,
   },
   [14] = {
-    [1] = sym_shorthand_field_identifier,
+    [1] = alias_sym_shorthand_field_identifier,
   },
   [15] = {
     [3] = sym_identifier,
@@ -1933,7 +1939,7 @@ static TSSymbol ts_alias_sequences[20][MAX_ALIAS_SEQUENCE_LENGTH] = {
     [0] = alias_sym_field_identifier,
   },
   [18] = {
-    [2] = sym_shorthand_field_identifier,
+    [2] = alias_sym_shorthand_field_identifier,
   },
   [19] = {
     [1] = alias_sym_field_identifier,
@@ -75939,7 +75945,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [1198] = {
     [sym_attribute_item] = STATE(1464),
-    [sym_shorthand_field_identifier] = STATE(1671),
+    [sym_shorthand_field_initializer] = STATE(1671),
     [sym_field_initializer] = STATE(1671),
     [sym_base_field_initializer] = STATE(1671),
     [aux_sym_enum_variant_list_repeat1] = STATE(1464),
@@ -76138,7 +76144,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [1213] = {
     [sym_attribute_item] = STATE(1464),
-    [sym_shorthand_field_identifier] = STATE(1834),
+    [sym_shorthand_field_initializer] = STATE(1834),
     [sym_field_initializer] = STATE(1834),
     [sym_base_field_initializer] = STATE(1834),
     [aux_sym_enum_variant_list_repeat1] = STATE(1464),
@@ -76294,7 +76300,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [1225] = {
     [sym_attribute_item] = STATE(1464),
-    [sym_shorthand_field_identifier] = STATE(1834),
+    [sym_shorthand_field_initializer] = STATE(1834),
     [sym_field_initializer] = STATE(1834),
     [sym_base_field_initializer] = STATE(1834),
     [aux_sym_enum_variant_list_repeat1] = STATE(1464),
@@ -76547,7 +76553,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [1245] = {
     [sym_attribute_item] = STATE(1464),
-    [sym_shorthand_field_identifier] = STATE(1834),
+    [sym_shorthand_field_initializer] = STATE(1834),
     [sym_field_initializer] = STATE(1834),
     [sym_base_field_initializer] = STATE(1834),
     [aux_sym_enum_variant_list_repeat1] = STATE(1464),
@@ -85381,7 +85387,7 @@ static TSParseActionEntry ts_parse_actions[] = {
   [4315] = {.count = 2, .reusable = true}, REDUCE(aux_sym_meta_item_repeat1, 2), SHIFT_REPEAT(892),
   [4318] = {.count = 1, .reusable = true}, SHIFT(131),
   [4320] = {.count = 1, .reusable = true}, SHIFT(1116),
-  [4322] = {.count = 1, .reusable = true}, REDUCE(sym_shorthand_field_identifier, 2),
+  [4322] = {.count = 1, .reusable = true}, REDUCE(sym_shorthand_field_initializer, 2),
   [4324] = {.count = 1, .reusable = true}, SHIFT(110),
   [4326] = {.count = 1, .reusable = true}, SHIFT(1225),
   [4328] = {.count = 2, .reusable = true}, REDUCE(aux_sym_closure_parameters_repeat1, 2), SHIFT_REPEAT(528),
@@ -85399,7 +85405,7 @@ static TSParseActionEntry ts_parse_actions[] = {
   [4353] = {.count = 1, .reusable = true}, SHIFT(916),
   [4355] = {.count = 1, .reusable = true}, REDUCE(sym_field_declaration, 4, .production_id = 19),
   [4357] = {.count = 1, .reusable = true}, SHIFT(449),
-  [4359] = {.count = 1, .reusable = true}, REDUCE(sym_shorthand_field_identifier, 1),
+  [4359] = {.count = 1, .reusable = true}, REDUCE(sym_shorthand_field_initializer, 1),
   [4361] = {.count = 1, .reusable = true}, SHIFT(132),
   [4363] = {.count = 1, .reusable = true}, SHIFT(707),
   [4365] = {.count = 1, .reusable = true}, SHIFT(1213),

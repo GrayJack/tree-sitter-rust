@@ -5277,7 +5277,7 @@
                   "members": [
                     {
                       "type": "SYMBOL",
-                      "name": "shorthand_field_identifier"
+                      "name": "shorthand_field_initializer"
                     },
                     {
                       "type": "SYMBOL",
@@ -5303,7 +5303,7 @@
                         "members": [
                           {
                             "type": "SYMBOL",
-                            "name": "shorthand_field_identifier"
+                            "name": "shorthand_field_initializer"
                           },
                           {
                             "type": "SYMBOL",
@@ -5343,7 +5343,7 @@
         }
       ]
     },
-    "shorthand_field_identifier": {
+    "shorthand_field_initializer": {
       "type": "SEQ",
       "members": [
         {
