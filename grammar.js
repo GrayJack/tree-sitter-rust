@@ -1019,7 +1019,7 @@ module.exports = grammar({
       repeat($.attribute_item),
       choice(
         $.macro_invocation,
-        $.match_pattern
+        $.match_pattern,
       ),
       '=>',
       choice(
@@ -1213,7 +1213,7 @@ module.exports = grammar({
         $._literal_pattern,
         $._path,
       ),
-      '...',
+      choice('...', '..='),
       choice(
         $._literal_pattern,
         $._path,
