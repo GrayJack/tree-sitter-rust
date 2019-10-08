@@ -805,6 +805,7 @@ module.exports = grammar({
 
     _expression_ending_with_block: $ => choice(
       $.unsafe_block,
+      $.async_block,
       $.block,
       $.if_expression,
       $.if_let_expression,
@@ -1119,6 +1120,12 @@ module.exports = grammar({
 
     unsafe_block: $ => seq(
       'unsafe',
+      $.block
+    ),
+
+    async_block: $ => seq(
+      'async',
+      optional("move"),
       $.block
     ),
 
